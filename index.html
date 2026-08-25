@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Full-stack developer covering 50+ services — web, AI, mobile, games, cloud, blockchain, and more.">
+<title>saniebeth</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+
+<style>
+/* ── TOKENS ─────────────────────────────────────────────────── */
+:root {
+  --bg:          #F6F4EF;
+  --surface:     #FFFFFF;
+  --card:        #EEEAE1;
+  --border:      #DAD6CB;
+  --text:        #120F08;
+  --muted:       #6B6457;
+  --accent:      #C97B00;
+  --accent-hi:   #F59E0B;
+  --accent-glow: rgba(201,123,0,0.12);
+  --tag-bg:      rgba(201,123,0,0.09);
+  --tag-fg:      #7A4800;
+  --dot:         rgba(0,0,0,0.055);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:          #07101D;
+    --surface:     #0D1A2B;
+    --card:        #122030;
+    --border:      #1B2D44;
+    --text:        #EAE7DC;
+    --muted:       #8A9BAC;
+    --accent:      #F59E0B;
+    --accent-hi:   #FCD34D;
+    --accent-glow: rgba(245,158,11,0.13);
+    --tag-bg:      rgba(245,158,11,0.10);
+    --tag-fg:      #FCD34D;
+    --dot:         rgba(255,255,255,0.038);
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg:          #07101D;
+  --surface:     #0D1A2B;
+  --card:        #122030;
+  --border:      #1B2D44;
+  --text:        #EAE7DC;
+  --muted:       #8A9BAC;
+  --accent:      #F59E0B;
+  --accent-hi:   #FCD34D;
+  --accent-glow: rgba(245,158,11,0.13);
+  --tag-bg:      rgba(245,158,11,0.10);
+  --tag-fg:      #FCD34D;
+  --dot:         rgba(255,255,255,0.038);
+}
+
+/* ── RESET ────────────────────────────────────────────────── */
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-weight: 400;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* ── NAV ─────────────────────────────────────────────────── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 2.5rem;
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  transition: background 0.3s;
+}
+
+.nav-logo {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.2rem;
+  letter-spacing: -0.03em;
+  text-decoration: none;
+  color: var(--text);
+}
+.nav-logo em {
+  font-style: normal;
+  color: var(--accent);
+}
+
+.nav-right { display: flex; align-items: center; gap: 0.875rem; }
+
+.btn-theme {
+  background: none;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  color: var(--muted);
+  padding: 0.4rem 0.55rem;
+  border-radius: 0.375rem;
+  font-size: 0.95rem;
+  line-height: 1;
+  transition: color 0.2s, border-color 0.2s;
+}
+.btn-theme:hover { color: var(--accent); border-color: var(--accent); }
+
+.btn-hire {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  text-decoration: none;
+  color: var(--bg);
+  background: var(--accent);
+  padding: 0.5rem 1.25rem;
+  border-radius: 0.375rem;
+  transition: background 0.2s, transform 0.15s;
+  white-space: nowrap;
+}
+.btn-hire:hover { background: var(--accent-hi); transform: translateY(-1px); }
+
+/* ── HERO ─────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 7rem 2.5rem 5rem;
+  overflow: hidden;
+}
+
+.hero-dotgrid {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(var(--dot) 1px, transparent 1px);
+  background-size: 26px 26px;
+  pointer-events: none;
+  animation: dotpulse 9s ease-in-out infinite;
+}
+
+@keyframes dotpulse {
+  0%, 100% { opacity: 0.55; }
+  50%       { opacity: 1; }
+}
+
+.hero-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--accent);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 1.75rem;
+  position: relative;
+  animation: slideup 0.65s ease 0.1s both;
+}
+
+.hero-headline {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(3.75rem, 9.5vw, 9.5rem);
+  line-height: 0.9;
+  letter-spacing: -0.045em;
+  color: var(--text);
+  position: relative;
+  margin-bottom: 2rem;
+  max-width: 14ch;
+  text-wrap: balance;
+  animation: slideup 0.75s ease 0.2s both;
+}
+.hero-headline .hl { display: block; color: var(--accent); }
+
+.hero-sub {
+  font-size: clamp(1rem, 1.8vw, 1.2rem);
+  font-weight: 300;
+  color: var(--muted);
+  max-width: 52ch;
+  line-height: 1.75;
+  position: relative;
+  margin-bottom: 2.75rem;
+  animation: slideup 0.75s ease 0.38s both;
+}
+
+.hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.875rem;
+  position: relative;
+  animation: slideup 0.75s ease 0.52s both;
+}
+
+.btn-primary {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: 1rem;
+  text-decoration: none;
+  color: var(--bg);
+  background: var(--accent);
+  padding: 0.9rem 2rem;
+  border-radius: 0.4rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+.btn-primary:hover {
+  background: var(--accent-hi);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px var(--accent-glow);
+}
+
+.btn-outline {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  text-decoration: none;
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 0.9rem 2rem;
+  border-radius: 0.4rem;
+  transition: border-color 0.2s, color 0.2s;
+}
+.btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+@keyframes slideup {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── STATS STRIP ──────────────────────────────────────────── */
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.stat-item {
+  flex: 1 1 170px;
+  padding: 2.25rem 2.5rem;
+  border-right: 1px solid var(--border);
+}
+.stat-item:last-child { border-right: none; }
+.stat-number {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 2.5rem;
+  color: var(--accent);
+  letter-spacing: -0.05em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.stat-label {
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: var(--muted);
+  margin-top: 0.45rem;
+  letter-spacing: 0.02em;
+}
+
+/* ── SECTION WRAPPER ──────────────────────────────────────── */
+.section-pad {
+  padding: 5.5rem 2.5rem;
+}
+.section-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--accent);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+.section-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.9rem, 3vw, 2.75rem);
+  letter-spacing: -0.035em;
+  color: var(--text);
+  line-height: 1.05;
+  text-wrap: balance;
+}
+.section-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.25rem;
+  margin-bottom: 2.75rem;
+}
+.section-desc {
+  font-size: 0.9rem;
+  color: var(--muted);
+  max-width: 50ch;
+  line-height: 1.75;
+}
+
+/* ── SERVICES GRID ────────────────────────────────────────── */
+.services-bento {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 0.875rem;
+}
+
+.svc-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 1.875rem;
+  transition: background 0.2s, border-color 0.25s, transform 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.svc-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--accent);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.3s ease;
+  border-radius: 3px 0 0 3px;
+}
+.svc-card:hover {
+  background: var(--card);
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+  transform: translateY(-2px);
+}
+.svc-card:hover::before { transform: scaleY(1); }
+
+.c6  { grid-column: span 6; }
+.c4  { grid-column: span 4; }
+.c3  { grid-column: span 3; }
+
+.svc-icon {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.4rem;
+  background: var(--accent-glow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.1rem;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+.svc-icon svg { width: 17px; height: 17px; }
+
+.svc-name {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text);
+  letter-spacing: -0.015em;
+  margin-bottom: 0.9rem;
+}
+
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+.tag {
+  font-size: 0.68rem;
+  font-weight: 400;
+  background: var(--tag-bg);
+  color: var(--tag-fg);
+  padding: 0.22rem 0.6rem;
+  border-radius: 99px;
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+}
+
+/* ── PLATFORMS STRIP ──────────────────────────────────────── */
+.platforms-section {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 2.25rem 2.5rem;
+}
+.platforms-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.66rem;
+  color: var(--muted);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.platforms-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+}
+.plat {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 0.25rem 1.25rem;
+  border-right: 1px solid var(--border);
+  line-height: 2;
+  transition: color 0.2s;
+}
+.plat:first-child { padding-left: 0; }
+.plat:last-child  { border-right: none; }
+.plat:hover { color: var(--accent); }
+
+/* ── WHY ME ───────────────────────────────────────────────── */
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.25rem;
+}
+.why-card {
+  padding: 1.875rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  transition: border-color 0.2s;
+}
+.why-card:hover { border-color: color-mix(in srgb, var(--accent) 40%, var(--border)); }
+.why-diamond {
+  color: var(--accent);
+  font-size: 0.9rem;
+  margin-bottom: 0.9rem;
+  line-height: 1;
+}
+.why-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text);
+  margin-bottom: 0.55rem;
+  letter-spacing: -0.01em;
+}
+.why-desc {
+  font-size: 0.875rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+/* ── FINAL CTA ────────────────────────�">Website Development</div>
+      <div class="tag-row">
+        <span class="tag">Business Websites</span>
+        <span class="tag">E-Commerce</span>
+        <span class="tag">Custom Websites</span>
+        <span class="tag">Landing Pages</span>
+        <span class="tag">Dropshipping</span>
+        <span class="tag">WordPress</span>
+        <span class="tag">Shopify</span>
+        <span class="tag">Wix</span>
+        <span class="tag">Webflow</span>
+        <span class="tag">Bubble</span>
+      </div>
+    </div>
+
+    <!-- AI Development — wide -->
+    <div class="svc-card c6 reveal">
+      <div class="svc-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
+        </svg>
+      </div>
+      <div class="svc-name">AI Development</div>
+      <div class="tag-row">
+        <span class="tag">AI Websites & Software</span>
+        <span class="tag">AI Mobile Apps</span>
+        <span class="tag">AI Integrations</span>
+        <span class="tag">AI Agents</span>
+        <span class="tag">AI Technology Consulting</span>
+        <span class="tag">Vibe Coding</span>
+        <span class="tag">MVP Development</span>
+        <span class="tag">Deployments & DevOps</span>
+        <span class="tag">Troubleshooting</span>
+      </div>
+    </div>
+
+    <!-- Software Development -->
+    <div class="svc-card c4 reveal">
+      <div class="svc-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+        </svg>
+      </div>
+      <div class="svc-name">Software Development</div>
+      <div class="tag-row">
+        <span class="tag">Full Stack Web Apps</span>
+        <span class="tag">Automations & Agents</span>
+        <span class="tag">APIs & Integrations</span>
+        <span class="tag">Databases</span>
+        <span class="tag">QA & Review</span>
+        <span class="tag">User Testing</span>
+      </div>
+    </div>
+
+    <!-- Mobile Apps -->
+    <div class="svc-card c4 reveal">
+      <div class="svc-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="5" y="2" width="14" height="20" rx="2"/>
+          <path d="M12 18h.01"/>
+        </svg>
+      </div>
+      <div class="svc-name">Mobile App Development</div>
+      <div class="tag-row">
+        <span class="tag">Cross-Platform</span>
+        <span class="tag">Android</span>
+        <span class="tag">iOS</span>
+        <span class="tag">App Maintenance</span>
+      </div>
+    </div>
+
+    <!-- Chatbots -->
+    <div class="svc-card c4 reveal">
+      <div class="svc-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+      </div>
+      <div class="svc-name">Chatbot Development</div>
+      <div class="tag-row">
+        <span class="tag">AI Chatbots</span>
+        <span class="tag">Rules-Based Chatbots</span>
+      </div>
+    </div>
+
+    <!-- Game Development -->
+    <div class="svc-card c3 reveal">
+      <div class="svc-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/>
+          <circle cx="15" cy="13" r="1"/><circle cx="17" cy="11" r="1"/>
+          <rect x="2" y="8" width="20" height="10" rx="5"/>
+        </svg>
+      </div>
+      <div class="svc-name">Game Development</div>
+      <div class="tag-row">
+        <span class="tag">Unreal Engine</span>
+        <span class="tag">Unity</span>
+        <span class="tag">Roblox</span>
+        <span class="tag">FiveM</span>
+      </div>
+    </div>
+
+    <!-- Cloud & Cybersecurity -->
+    <div class="svc-card c3 reveal">
+      <div class="svc-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/>
+        </svg>
+      </div>
+      <div class="svc-name">Cloud & Cybersecurity</div>
+      <div class="tag-row">
+        <span class="tag">Cloud Computing</span>
+        <span class="tag">DevOps Engineering</span>
+        <span class="tag">Cybersecurity</span>
+      </div>
+    </div>
+
+    <!-- Website Maintenance -->
+    <div class="svc-card c3 reveal">
+      <div class="svc-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+        </svg>
+      </div>
+      <div class="svc-name">Website Maintenance</div>
+      <div class="tag-row">
+        <span class="tag">Customization</span>
+        <span class="tag">Bug Fixes</span>
+        <span class="tag">Backup & Migration</span>
+        <span class="tag">Speed Optimization</span>
+      </div>
+    </div>
+
+    <!-- Blockchain & Web3 -->
+    <div class="svc-card c3 reveal">
+      <div class="svc-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+        </svg>
+      </div>
+      <div class="svc-name">Blockchain & Web3</div>
+      <div class="tag-row">
+        <span class="tag">Decentralized Apps</span>
+        <span class="tag">Cryptocurrencies</span>
+        <span class="tag">Token Development</span>
+      </div>
+    </div>
+
+    <!-- Electronics & IT — spans 6 -->
+    <div class="svc-card c6 reveal">
+      <div class="svc-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/>
+          <line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/>
+          <line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/>
+          <line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="15" x2="23" y2="15"/>
+          <line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="15" x2="4" y2="15"/>
+        </svg>
+      </div>
+      <div class="svc-name">Electronics Engineering & IT Support</div>
+      <div class="tag-row">
+        <span class="tag">Electronics Engineering</span>
+        <span class="tag">Support & IT</span>
+        <span class="tag">Technical Consulting</span>
+      </div>
+    </div>
+
+    <!-- Project Management — spans 6 -->
+    <div class="svc-card c6 reveal">
+      <div class="svc-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="18" rx="2"/>
+          <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+          <line x1="3" y1="10" x2="21" y2="10"/>
+          <path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/>
+        </svg>
+      </div>
+      <div class="svc-name">Project Management</div>
+      <div class="tag-row">
+        <span class="tag">Tech Project Management</span>
+        <span class="tag">End-to-End Delivery</span>
+        <span class="tag">Managed Projects</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── PLATFORMS STRIP ───────────────────────────────────── -->
+<div class="platforms-section">
+  <div class="platforms-label">Platforms &amp; Technologies</div>
+  <div class="platforms-row">
+    <span class="plat">WordPress</span>
+    <span class="plat">Shopify</span>
+    <span class="plat">Wix</span>
+    <span class="plat">Webflow</span>
+    <span class="plat">Bubble</span>
+    <span class="plat">React</span>
+    <span class="plat">Node.js</span>
+    <span class="plat">Flutter</span>
+    <span class="plat">Unity</span>
+    <span class="plat">Unreal</span>
+    <span class="plat">iOS</span>
+    <span class="plat">Android</span>
+    <span class="plat">AWS</span>
+    <span class="plat">Solidity</span>
+  </div>
+</div>
+
+<!-- ─── WHY ME ─────────────────────────────────────────────── -->
+<section class="section-pad">
+  <div class="section-header">
+    <div>
+      <div class="section-eyebrow">// Why Hire Me</div>
+      <h2 class="section-title">Built Different.</h2>
+    </div>
+  </div>
+  <div class="why-grid">
+    <div class="why-card reveal">
+      <div class="why-diamond">◆</div>
+      <div class="why-title">Everything Under One Roof</div>
+      <div class="why-desc">No juggling multiple freelancers. From your landing page to your AI backend to your mobile app, I handle the full stack start to finish.</div>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-diamond">◆</div>
+      <div class="why-title">AI-Native Mindset</div>
+      <div class="why-desc">I don't just add AI as an afterthought. Intelligent systems, automation, and AI agents are woven into everything I build from day one.</div>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-diamond">◆</div>
+      <div class="why-title">Fast, Reliable Delivery</div>
+      <div class="why-desc">Every project lands on time with clean code and clear documentation. Your deadlines are taken seriously — no excuses, no surprises.</div>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-diamond">◆</div>
+      <div class="why-title">Five-Star Quality</div>
+      <div class="why-desc">Not just functional — polished, scalable, and built to last. Every deliverable reflects the care of someone who takes pride in their craft.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FINAL CTA ─────────────────────────────────────────── -->
+<section class="cta-section">
+  <p class="section-eyebrow" style="margin-bottom:1.25rem;">// Ready to Build?</p>
+  <h2 class="cta-headline">
+    Let's Make Something<br><span>Exceptional.</span>
+  </h2>
+  <p class="cta-sub">
+    Whether it's a startup, a store, a game, or an AI platform — I have the range to bring it to life. Browse my gigs and let's get started today.
+  </p>
+  <a href="https://www.fiverr.com/saniebeth/buying?source=avatar_menu_profile"
+     target="_blank" rel="noopener" class="btn-primary"
+     style="font-size:1.05rem; padding:1rem 2.5rem;">
+    Browse My Fiverr Gigs ↗
+  </a>
+</section>
+
+<!-- ─── FOOTER ─────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-brand">saniebeth</div>
+  <div class="footer-right">
+    Full-Stack Developer ·
+    <a href="https://www.fiverr.com/saniebeth/buying?source=avatar_menu_profile"
+       target="_blank" rel="noopener">Available on Fiverr</a>
+     · © 2026
+  </div>
+</footer>
+
+<script>
+/* ── THEME TOGGLE ────────────────────────────────────────────────── */
+.cta-section {
+  background: var(--card);
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: 7rem 2.5rem;
+}
+.cta-headline {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(2.25rem, 5.5vw, 4.5rem);
+  letter-spacing: -0.045em;
+  color: var(--text);
+  line-height: 0.95;
+  text-wrap: balance;
+  margin-bottom: 1.5rem;
+}
+.cta-headline span { color: var(--accent); }
+.cta-sub {
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--muted);
+  max-width: 46ch;
+  margin: 0 auto 2.75rem;
+  line-height: 1.75;
+}
+
+/* ── FOOTER ───────────────────────────────────────────────── */
+footer {
+  padding: 1.75rem 2.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border-top: 1px solid var(--border);
+}
+.footer-brand {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: var(--muted);
+  letter-spacing: -0.02em;
+}
+.footer-right {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+.footer-right a {
+  color: var(--accent);
+  text-decoration: none;
+}
+.footer-right a:hover { text-decoration: underline; }
+
+/* ── SCROLL REVEAL ────────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.in { opacity: 1; transform: translateY(0); }
+
+/* ── RESPONSIVE ───────────────────────────────────────────── */
+@media (max-width: 960px) {
+  .c6, .c4, .c3 { grid-column: span 12; }
+  .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+  .stat-item:last-child { border-bottom: none; }
+}
+
+@media (max-width: 640px) {
+  nav { padding: 1rem 1.25rem; }
+  .hero { padding: 5rem 1.25rem 3.5rem; min-height: 85vh; }
+  .section-pad { padding: 4rem 1.25rem; }
+  .platforms-section { padding: 2rem 1.25rem; }
+  .cta-section { padding: 5rem 1.25rem; }
+  footer { padding: 1.5rem 1.25rem; }
+}
+
+@media (max-width: 480px) {
+  .hero-headline { font-size: clamp(3rem, 15vw, 4.5rem); }
+}
+
+/* ── REDUCED MOTION ───────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .hero-eyebrow, .hero-headline, .hero-sub, .hero-ctas {
+    opacity: 1; transform: none; animation: none; transition: none;
+  }
+  .hero-dotgrid { animation: none; opacity: 0.7; }
+  .svc-card, .btn-primary, .btn-hire, .btn-outline { transition: none; }
+}
+</style>
+
+<!-- ─── NAV ─────────────────────────────────────────────── -->
+<nav>
+  <a href="#" class="nav-logo">sanie<em>beth</em></a>
+  <div class="nav-right">
+    <button class="btn-theme" id="themeBtn" aria-label="Toggle theme" title="Toggle theme">○</button>
+    <a href="https://www.fiverr.com/saniebeth/buying?source=avatar_menu_profile"
+       target="_blank" rel="noopener" class="btn-hire">Hire Me on Fiverr ↗</a>
+  </div>
+</nav>
+
+<!-- ─── HERO ─────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-dotgrid" aria-hidden="true"></div>
+
+  <p class="hero-eyebrow">// Full-Stack Developer · Available on Fiverr</p>
+
+  <h1 class="hero-headline">
+    I BUILD
+    <span class="hl">ANYTHING.</span>
+  </h1>
+
+  <p class="hero-sub">
+    From AI agents and e-commerce empires to mobile apps, game worlds, and blockchain platforms — one developer, the full spectrum, no limits.
+  </p>
+
+  <div class="hero-ctas">
+    <a href="https://www.fiverr.com/saniebeth/buying?source=avatar_menu_profile"
+       target="_blank" rel="noopener" class="btn-primary">
+      Browse My Fiverr Gigs ↗
+    </a>
+    <a href="#services" class="btn-outline">Explore Services ↓</a>
+  </div>
+</section>
+
+<!-- ─── STATS ─────────────────────────────────────────────── -->
+<div class="stats">
+  <div class="stat-item reveal">
+    <div class="stat-number">50+</div>
+    <div class="stat-label">Specialized Services</div>
+  </div>
+  <div class="stat-item reveal">
+    <div class="stat-number">14+</div>
+    <div class="stat-label">Platforms & Frameworks</div>
+  </div>
+  <div class="stat-item reveal">
+    <div class="stat-number">Web → AI</div>
+    <div class="stat-label">Complete Technology Range</div>
+  </div>
+  <div class="stat-item reveal">
+    <div class="stat-number">5★</div>
+    <div class="stat-label">Fiverr Quality Standard</div>
+  </div>
+</div>
+
+<!-- ─── SERVICES ──────────────────────────────────────────── -->
+<section class="section-pad" id="services">
+  <div class="section-header">
+    <div>
+      <div class="section-eyebrow">// What I Build</div>
+      <h2 class="section-title">Every Service.<br>One Developer.</h2>
+    </div>
+    <p class="section-desc">
+      50+ specialized services across web, AI, mobile, games, cloud, blockchain, and beyond — all delivered from one place.
+    </p>
+  </div>
+
+  <div class="services-bento">
+
+    <!-- Website Development — wide -->
+    <div class="svc-card c6 reveal">
+      <div class="svc-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>
+        </svg>
+      </div>
+      <div class="svc-name��──────────── */
+(function() {
+  const btn  = document.getElementById('themeBtn');
+  const root = document.documentElement;
+  const SUN  = '○';   // light indicator
+  const MOON = '●';   // dark indicator
+
+  function getStored() {
+    try { return localStorage.getItem('sb-theme'); } catch { return null; }
+  }
+  function setStored(v) {
+    try { localStorage.setItem('sb-theme', v); } catch {}
+  }
+  function sysPref() {
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  function apply(t) {
+    if (t === 'dark') {
+      root.setAttribute('data-theme', 'dark');
+      btn.textContent = SUN;
+      btn.title = 'Switch to light mode';
+    } else {
+      root.setAttribute('data-theme', 'light');
+      btn.textContent = MOON;
+      btn.title = 'Switch to dark mode';
+    }
+  }
+
+  const stored = getStored();
+  const initial = stored || sysPref();
+  apply(initial);
+
+  btn.addEventListener('click', () => {
+    const current = root.getAttribute('data-theme') || sysPref();
+    const next = current === 'dark' ? 'light' : 'dark';
+    apply(next);
+    setStored(next);
+  });
+
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+    if (!getStored()) apply(e.matches ? 'dark' : 'light');
+  });
+})();
+
+/* ── SCROLL REVEAL ──────────────────────────────────────── */
+(function() {
+  if (!('IntersectionObserver' in window)) {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+    return;
+  }
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+})();
+</script>
+</body>
+</html>
