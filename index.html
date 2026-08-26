@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Full-stack developer covering 50+ services — web, AI, mobile, games, cloud, blockchain, and more.">
-<title>saniebeth</title>
+<title>DOMAINS23</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
@@ -560,11 +560,90 @@ footer {
   font-size: 1rem;
   margin-left: 0.2em;
 }
+
+/* ── SERVICE DROPDOWN ────────────────────────────────────── */
+.svc-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.9rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--muted);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.63rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0;
+  transition: color 0.2s;
+}
+.svc-toggle:hover { color: var(--accent); }
+.svc-toggle-icon {
+  width: 14px;
+  height: 14px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.3s ease, border-color 0.2s;
+}
+.svc-toggle-icon svg {
+  width: 8px;
+  height: 8px;
+  transition: transform 0.3s ease;
+}
+.svc-toggle[aria-expanded="true"] .svc-toggle-icon svg {
+  transform: rotate(180deg);
+}
+.svc-toggle[aria-expanded="true"] { color: var(--accent); }
+
+.svc-desc {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.38s ease, opacity 0.3s ease, margin-top 0.3s ease;
+  margin-top: 0;
+}
+.svc-desc.open {
+  max-height: 200px;
+  opacity: 1;
+  margin-top: 0.875rem;
+}
+.svc-desc-inner {
+  padding-top: 0.875rem;
+  border-top: 1px solid var(--border);
+}
+.svc-desc-problem {
+  font-size: 0.65rem;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.3rem;
+}
+.svc-desc-text {
+  font-size: 0.81rem;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 0.65rem;
+}
+.svc-desc-text:last-child { margin-bottom: 0; }
+.svc-desc-solution {
+  font-size: 0.65rem;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin-bottom: 0.3rem;
+}
 </style>
 
 <!-- ─── NAV ─────────────────────────────────────────────── -->
 <nav>
-  <a href="#" class="nav-logo">sanie<em>beth</em></a>
+  <a href="#" class="nav-logo">DOMAINS<em>23</em></a>
   <div class="nav-right">
     <button class="btn-theme" id="themeBtn" aria-label="Toggle theme" title="Toggle theme">○</button>
     <a href="https://www.fiverr.com/saniebeth/buying?source=avatar_menu_profile"
@@ -651,6 +730,17 @@ footer {
         <span class="tag">Bubble</span>
       </div>
       <div class="svc-price">Starting at<strong>$50</strong></div>
+      <button class="svc-toggle" aria-expanded="false" onclick="toggleDesc(this)">
+        Details <span class="svc-toggle-icon"><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 1 5 5 9 1"/></svg></span>
+      </button>
+      <div class="svc-desc">
+        <div class="svc-desc-inner">
+          <div class="svc-desc-problem">// The Problem</div>
+          <p class="svc-desc-text">You need an online presence but web development is complex, expensive, and time-consuming to manage on your own.</p>
+          <div class="svc-desc-solution">// The Solution</div>
+          <p class="svc-desc-text">Custom, high-converting websites built fast — from simple landing pages to full e-commerce stores, on any platform you choose.</p>
+        </div>
+      </div>
     </div>
 
     <!-- AI Development — wide -->
@@ -674,6 +764,17 @@ footer {
         <span class="tag">Troubleshooting</span>
       </div>
       <div class="svc-price">Starting at<strong>$150</strong></div>
+      <button class="svc-toggle" aria-expanded="false" onclick="toggleDesc(this)">
+        Details <span class="svc-toggle-icon"><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 1 5 5 9 1"/></svg></span>
+      </button>
+      <div class="svc-desc">
+        <div class="svc-desc-inner">
+          <div class="svc-desc-problem">// The Problem</div>
+          <p class="svc-desc-text">You want to leverage AI but don't know where to start or how to build smart, production-ready systems.</p>
+          <div class="svc-desc-solution">// The Solution</div>
+          <p class="svc-desc-text">End-to-end AI products — agents, integrations, and AI-powered apps that automate your work and give you a real competitive edge.</p>
+        </div>
+      </div>
     </div>
 
     <!-- Software Development -->
@@ -693,6 +794,17 @@ footer {
         <span class="tag">User Testing</span>
       </div>
       <div class="svc-price">Starting at<strong>$100</strong></div>
+      <button class="svc-toggle" aria-expanded="false" onclick="toggleDesc(this)">
+        Details <span class="svc-toggle-icon"><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 1 5 5 9 1"/></svg></span>
+      </button>
+      <div class="svc-desc">
+        <div class="svc-desc-inner">
+          <div class="svc-desc-problem">// The Problem</div>
+          <p class="svc-desc-text">Your business needs custom software that off-the-shelf tools simply can't provide or adapt to.</p>
+          <div class="svc-desc-solution">// The Solution</div>
+          <p class="svc-desc-text">Full-stack web apps, REST APIs, automation pipelines, and database solutions — built clean, tested, and fully documented.</p>
+        </div>
+      </div>
     </div>
 
     <!-- Mobile Apps -->
@@ -711,6 +823,17 @@ footer {
         <span class="tag">App Maintenance</span>
       </div>
       <div class="svc-price">Starting at<strong>$200</strong></div>
+      <button class="svc-toggle" aria-expanded="false" onclick="toggleDesc(this)">
+        Details <span class="svc-toggle-icon"><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 1 5 5 9 1"/></svg></span>
+      </button>
+      <div class="svc-desc">
+        <div class="svc-desc-inner">
+          <div class="svc-desc-problem">// The Problem</div>
+          <p class="svc-desc-text">Your idea needs a mobile presence on iOS and Android, but native development for each is costly and slow.</p>
+          <div class="svc-desc-solution">// The Solution</div>
+          <p class="svc-desc-text">Cross-platform mobile apps that look and feel native on every device — delivered at a fraction of the cost and timeline.</p>
+        </div>
+      </div>
     </div>
 
     <!-- Chatbots -->
@@ -726,6 +849,17 @@ footer {
         <span class="tag">Rules-Based Chatbots</span>
       </div>
       <div class="svc-price">Starting at<strong>$75</strong></div>
+      <button class="svc-toggle" aria-expanded="false" onclick="toggleDesc(this)">
+        Details <span class="svc-toggle-icon"><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 1 5 5 9 1"/></svg></span>
+      </button>
+      <div class="svc-desc">
+        <div class="svc-desc-inner">
+          <div class="svc-desc-problem">// The Problem</div>
+          <p class="svc-desc-text">Your team wastes hours answering the same customer questions over and over, losing leads after hours.</p>
+          <div class="svc-desc-solution">// The Solution</div>
+          <p class="svc-desc-text">AI-powered chatbots that handle support, qualify leads, and engage users 24/7 — no human intervention needed.</p>
+        </div>
+      </div>
     </div>
 
     <!-- Game Development -->
@@ -745,6 +879,17 @@ footer {
         <span class="tag">FiveM</span>
       </div>
       <div class="svc-price">Starting at<strong>$150</strong></div>
+      <button class="svc-toggle" aria-expanded="false" onclick="toggleDesc(this)">
+        Details <span class="svc-toggle-icon"><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 1 5 5 9 1"/></svg></span>
+      </button>
+      <div class="svc-desc">
+        <div class="svc-desc-inner">
+          <div class="svc-desc-problem">// The Problem</div>
+          <p class="svc-desc-text">You have a game concept but lack the technical depth to bring it to life on modern engines.</p>
+          <div class="svc-desc-solution">// The Solution</div>
+          <p class="svc-desc-text">Fully playable games on Unreal, Unity, Roblox, or FiveM — from prototype to polished, shippable product.</p>
+        </div>
+      </div>
     </div>
 
     <!-- Cloud & Cybersecurity -->
@@ -761,6 +906,17 @@ footer {
         <span class="tag">Cybersecurity</span>
       </div>
       <div class="svc-price">Starting at<strong>$100</strong></div>
+      <button class="svc-toggle" aria-expanded="false" onclick="toggleDesc(this)">
+        Details <span class="svc-toggle-icon"><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 1 5 5 9 1"/></svg></span>
+      </button>
+      <div class="svc-desc">
+        <div class="svc-desc-inner">
+          <div class="svc-desc-problem">// The Problem</div>
+          <p class="svc-desc-text">Your infrastructure is slow, over-budget, or exposed to security threats you don't have time to monitor.</p>
+          <div class="svc-desc-solution">// The Solution</div>
+          <p class="svc-desc-text">Cloud-native deployments on AWS, secure DevOps pipelines, and hardened systems that scale reliably without risk.</p>
+        </div>
+      </div>
     </div>
 
     <!-- Website Maintenance -->
@@ -778,6 +934,17 @@ footer {
         <span class="tag">Speed Optimization</span>
       </div>
       <div class="svc-price">Starting at<strong>$30</strong></div>
+      <button class="svc-toggle" aria-expanded="false" onclick="toggleDesc(this)">
+        Details <span class="svc-toggle-icon"><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 1 5 5 9 1"/></svg></span>
+      </button>
+      <div class="svc-desc">
+        <div class="svc-desc-inner">
+          <div class="svc-desc-problem">// The Problem</div>
+          <p class="svc-desc-text">Your site is outdated, breaking, or slowing down while you're too busy running your business to keep up.</p>
+          <div class="svc-desc-solution">// The Solution</div>
+          <p class="svc-desc-text">Ongoing maintenance — bug fixes, speed optimization, backups, and updates — so your site stays fast, secure, and healthy.</p>
+        </div>
+      </div>
     </div>
 
     <!-- Blockchain & Web3 -->
@@ -795,6 +962,17 @@ footer {
         <span class="tag">Token Development</span>
       </div>
       <div class="svc-price">Starting at<strong>$200</strong></div>
+      <button class="svc-toggle" aria-expanded="false" onclick="toggleDesc(this)">
+        Details <span class="svc-toggle-icon"><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 1 5 5 9 1"/></svg></span>
+      </button>
+      <div class="svc-desc">
+        <div class="svc-desc-inner">
+          <div class="svc-desc-problem">// The Problem</div>
+          <p class="svc-desc-text">You want to build in the decentralized space but blockchain is complex, fast-moving, and hard to find reliable expertise for.</p>
+          <div class="svc-desc-solution">// The Solution</div>
+          <p class="svc-desc-text">Smart contracts, DApps, token creation, and Web3 integrations — built securely on proven, audited frameworks.</p>
+        </div>
+      </div>
     </div>
 
     <!-- Electronics & IT — spans 6 -->
@@ -815,6 +993,17 @@ footer {
         <span class="tag">Technical Consulting</span>
       </div>
       <div class="svc-price">Starting at<strong>$50</strong></div>
+      <button class="svc-toggle" aria-expanded="false" onclick="toggleDesc(this)">
+        Details <span class="svc-toggle-icon"><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 1 5 5 9 1"/></svg></span>
+      </button>
+      <div class="svc-desc">
+        <div class="svc-desc-inner">
+          <div class="svc-desc-problem">// The Problem</div>
+          <p class="svc-desc-text">Your hardware, firmware, or IT systems need expert attention that's hard to find locally or affordably.</p>
+          <div class="svc-desc-solution">// The Solution</div>
+          <p class="svc-desc-text">Electronics engineering, embedded systems, and IT consulting — technical problems diagnosed and solved remotely with precision.</p>
+        </div>
+      </div>
     </div>
 
     <!-- Project Management — spans 6 -->
@@ -834,6 +1023,17 @@ footer {
         <span class="tag">Managed Projects</span>
       </div>
       <div class="svc-price">Starting at<strong>$75</strong></div>
+      <button class="svc-toggle" aria-expanded="false" onclick="toggleDesc(this)">
+        Details <span class="svc-toggle-icon"><svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 1 5 5 9 1"/></svg></span>
+      </button>
+      <div class="svc-desc">
+        <div class="svc-desc-inner">
+          <div class="svc-desc-problem">// The Problem</div>
+          <p class="svc-desc-text">Your tech project is falling behind schedule, going over budget, or lacking clear direction and accountability.</p>
+          <div class="svc-desc-solution">// The Solution</div>
+          <p class="svc-desc-text">End-to-end project management — from roadmap to final delivery — keeping your team aligned and your milestones on track.</p>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -910,7 +1110,7 @@ footer {
 
 <!-- ─── FOOTER ─────────────────────────────────────────────── -->
 <footer>
-  <div class="footer-brand">saniebeth</div>
+  <div class="footer-brand">DOMAINS23</div>
   <div class="footer-right">
     Full-Stack Developer ·
     <a href="https://www.fiverr.com/saniebeth/buying?source=avatar_menu_profile"
@@ -920,7 +1120,7 @@ footer {
 </footer>
 
 <script>
-/* ── THEME TOGGLE ──────────────────────────────────────── */
+/* ── THEME TOGGLE ───────────────────────────────────────── */
 (function() {
   const btn  = document.getElementById('themeBtn');
   const root = document.documentElement;
@@ -928,10 +1128,10 @@ footer {
   const MOON = '●';   // dark indicator
 
   function getStored() {
-    try { return localStorage.getItem('sb-theme'); } catch { return null; }
+    try { return localStorage.getItem('domains23-theme'); } catch { return null; }
   }
   function setStored(v) {
-    try { localStorage.setItem('sb-theme', v); } catch {}
+    try { localStorage.setItem('domains23-theme', v); } catch {}
   }
   function sysPref() {
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
@@ -963,6 +1163,14 @@ footer {
     if (!getStored()) apply(e.matches ? 'dark' : 'light');
   });
 })();
+
+/* ── SERVICE DROPDOWN TOGGLE ────────────────────────────── */
+function toggleDesc(btn) {
+  const desc = btn.nextElementSibling;
+  const expanded = btn.getAttribute('aria-expanded') === 'true';
+  btn.setAttribute('aria-expanded', String(!expanded));
+  desc.classList.toggle('open', !expanded);
+}
 
 /* ── SCROLL REVEAL ──────────────────────────────────────── */
 (function() {
