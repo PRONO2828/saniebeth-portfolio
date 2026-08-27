@@ -107,6 +107,31 @@ function systemPromptFor(service) {
     'not invent a delivery date or promise work you cannot verify will happen.';
 }
 
+// Free-plan / no-credits testing fallback. Produces a clearly-labeled simulated
+// reply so the full checkout -> chat flow can be tested end to end without
+// spending real Anthropic API credits. Never used once real credits/billing
+// are active, unless AGENT_DEMO_MODE=true is explicitly set.
+function demoReply(service, messages) {
+  const need = (messages[messages.length - 1] && messages[messages.length - 1].content) || '';
+  const trimmedNeed = need.length > 240 ? need.slice(0, 240) + '…' : need;
+
+  if (service.mode === 'autonomous') {
+    return '[DEMO MODE — no live AI credits configured yet]\n\n' +
+      'Thanks — here is what I heard for your "' + service.name + '" project: "' + trimmedNeed + '"\n\n' +
+      'In demo mode I can\'t generate a real deliverable, but this is exactly where the live agent ' +
+      'would ask 1-3 more sharp clarifying questions, then deliver working code, copy, or a config ' +
+      'file directly in this chat — ready to use, not just described.\n\n' +
+      'To switch this on for real: add API credits at platform.claude.com (Settings -> Billing). ' +
+      'No further changes are needed here — it activates automatically.';
+  }
+
+  return '[DEMO MODE — no live AI credits configured yet]\n\n' +
+    'Got it — for "' + service.name + '": "' + trimmedNeed + '"\n\n' +
+    'The live agent would run a short requirements interview (scope, platform, timeline, budget, ' +
+    'best contact email) and finish with a formatted PROJECT BRIEF for DOMAINS23 to follow up on.\n\n' +
+    'To switch this on for real: add API credits at platform.claude.com (Settings -> Billing).';
+}
+
 module.exports = async (req, res) => {
   if (req.method !== 'POST') {
     res.status(405).json({ error: 'Method not allowed' });
@@ -114,7 +139,11 @@ module.exports = async (req, res) => {
   }
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) {
+  const forcedDemo = process.env.AGENT_DEMO_MODE === 'true';
+  const forcedLive = process.env.AGENT_DEMO_MODE === 'false';
+  const demoMode = forcedDemo || (!apiKey && !forcedLive);
+
+  if (!apiKey && !demoMode) {
     res.status(500).json({ error: 'Agent is not configured yet — missing ANTHROPIC_API_KEY on the server.' });
     return;
   }
@@ -150,6 +179,11 @@ module.exports = async (req, res) => {
     return;
   }
 
+  if (demoMode) {
+    res.status(200).json({ reply: demoReply(service, cleanMessages) });
+    return;
+  }
+
   try {
     const upstream = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -170,6 +204,12 @@ module.exports = async (req, res) => {
 
     if (!upstream.ok) {
       const msg = (data && data.error && data.error.message) || 'Upstream error from AI provider.';
+      // Graceful fallback: if the only problem is billing/credits, keep the
+      // demo usable instead of surfacing a hard error to the customer.
+      if (/credit balance|billing|insufficient/i.test(msg)) {
+        res.status(200).json({ reply: demoReply(service, cleanMessages) + '\n\n(Live AI call skipped: ' + msg + ')' });
+        return;
+      }
       res.status(502).json({ error: msg });
       return;
     }
